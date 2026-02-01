@@ -77,7 +77,7 @@ h1 {
 
 .buttons {
   position: relative;
-  height: 160px;
+  height: 120px;
 }
 
 button {
@@ -106,9 +106,10 @@ button {
 #noBtn {
   background: #eee;
   color: #555;
-  left: 20px;
+  position: fixed;
   top: 20px;
-  z-index: 3;
+  left: 20px;
+  z-index: 9999;
 }
 
 .success {
@@ -137,8 +138,9 @@ button {
     <h1>Will you be my Valentine? 💕</h1>
     <div class="tease" id="teaseText"></div><div class="buttons">
   <button id="yesBtn">Yes 💖</button>
-  <button id="noBtn">No 🙈</button>
 </div>
+
+<button id="noBtn">No 🙈</button>
 
 <div class="success" id="successMsg">YAYYYY BABYYY 💖🐾</div>
 
@@ -166,7 +168,6 @@ button {
       const randomX = Math.random() * maxX;
       const randomY = Math.random() * maxY;
 
-      noBtn.style.position = 'fixed';
       noBtn.style.left = randomX + 'px';
       noBtn.style.top = randomY + 'px';
 
@@ -226,4 +227,4 @@ button {
       }
     }
   </script></body>
-</html>  
+</html>
