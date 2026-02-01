@@ -132,8 +132,7 @@ button {
 </head>
 <body>  <div class="card">
     <div class="dog">
-      <!-- Cute dog image -->
-      <img src="https://media.tenor.com/1C6pQ8Y5Z0cAAAAi/dog-love.gif" alt="Cute dog" />
+      <div style="font-size:90px;">🐶</div>
     </div>
     <h1>Will you be my Valentine? 💕</h1>
     <div class="tease" id="teaseText"></div><div class="buttons">
@@ -142,7 +141,10 @@ button {
 
 <button id="noBtn">No 🙈</button>
 
-<div class="success" id="successMsg">YAYYYY BABYYY 💖🐾</div>
+<div class="success" id="successMsg">
+  YAYYYY BABYYY 💖🐾<br />
+  <span style="font-size:18px;">I LOVEE YOUU STUTIIII 💕</span>
+</div>
 
   </div>  <script>
     const noBtn = document.getElementById('noBtn');
@@ -182,7 +184,7 @@ button {
       successMsg.style.display = 'block';
       yesBtn.style.display = 'none';
       noBtn.style.display = 'none';
-      teaseText.textContent = "YAYYYY BABYYY 💘";
+      teaseText.textContent = "I LOVEE YOUU STUTIIII 💕";
       launchConfetti();
     });
 
@@ -228,3 +230,5 @@ button {
     }
   </script></body>
 </html>
+  
+      
