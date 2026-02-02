@@ -44,7 +44,6 @@ h1 {
   margin-top: 30px;
   display: flex;
   gap: 20px;
-  position: relative;
 }
 
 button {
@@ -110,6 +109,7 @@ button {
   to { text-shadow: 0 0 22px #ff4d88; }
 }
 
+/* floating hearts */
 .heart {
   position: absolute;
   animation: float 6s linear infinite;
@@ -119,6 +119,24 @@ button {
   from { transform: translateY(110vh); opacity: 1; }
   to { transform: translateY(-10vh); opacity: 0; }
 }
+
+/* explosion hearts */
+.explosion-heart {
+  position: fixed;
+  pointer-events: none;
+  animation: heartBlast 900ms ease-out forwards;
+}
+
+@keyframes heartBlast {
+  0% {
+    transform: translate(0,0) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(1.4);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 
@@ -126,7 +144,6 @@ button {
 
 <div id="flash"></div>
 
-<!-- REAL DOG IMAGE (reliable) -->
 <img id="dog" src="https://placedog.net/500/500?id=23" alt="cute dog">
 
 <h1>Will you be my Valentine? 💕</h1>
@@ -148,7 +165,7 @@ let noCount = 0;
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 
-// place NO initially next to YES
+// place NO next to YES initially
 function placeNoNearYes() {
   const r = yesBtn.getBoundingClientRect();
   noBtn.style.left = r.right + 20 + "px";
@@ -173,36 +190,58 @@ noBtn.addEventListener("click", () => {
   const maxX = window.innerWidth - noBtn.offsetWidth - padding;
   const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-  let x = Math.random() * maxX;
-  let y = Math.random() * maxY;
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
 
   if (noCount === 6) {
     alert("OKAY THIS IS GETTING EMBARRASSING 😭🐶 JUST SAY YES");
   }
 });
 
-document.getElementById("yes").addEventListener("click", () => {
+function explodeHearts(count = 40) {
+  for (let i = 0; i < count; i++) {
+    const heart = document.createElement("div");
+    heart.className = "explosion-heart";
+    heart.innerText = "💖";
+
+    heart.style.left = "50vw";
+    heart.style.top = "50vh";
+
+    heart.style.setProperty("--x", (Math.random()-0.5)*500 + "px");
+    heart.style.setProperty("--y", (Math.random()-0.5)*500 + "px");
+
+    heart.style.fontSize = 18 + Math.random()*26 + "px";
+    heart.style.color = ["#ff4d88","#ff1f6b","#ff85a2","#ffc1dc"]
+      [Math.floor(Math.random()*4)];
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 900);
+  }
+}
+
+yesBtn.addEventListener("click", () => {
   beep(900);
+
+  document.querySelector(".buttons").style.display = "none";
 
   const msg = document.getElementById("message");
   msg.style.display = "block";
-  msg.classList.add("shake", "explode");
+  msg.classList.add("shake","explode");
+
+  explodeHearts();
 
   const flash = document.getElementById("flash");
   flash.style.opacity = 0.5;
   setTimeout(() => flash.style.opacity = 0, 300);
 });
 
-// floating hearts
+// floating hearts loop
 setInterval(() => {
   const h = document.createElement("div");
   h.className = "heart";
   h.innerText = "💖";
-  h.style.left = Math.random() * 100 + "vw";
-  h.style.fontSize = 14 + Math.random() * 30 + "px";
+  h.style.left = Math.random()*100 + "vw";
+  h.style.fontSize = 14 + Math.random()*30 + "px";
   h.style.color = ["#ff4d88","#ff85a2","#ff1f6b","#ffb3cc"]
     [Math.floor(Math.random()*4)];
   document.body.appendChild(h);
